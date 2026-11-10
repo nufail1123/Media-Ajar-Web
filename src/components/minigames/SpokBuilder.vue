@@ -16,7 +16,15 @@ const selectedChoice = ref<string | null>(null)
 const isChoiceSubmitted = ref(false)
 
 const isSequenceMode = computed(() => {
-  return q.value?.mode === 'sequence' || (!q.value?.mode && !!q.value?.words)
+  return (
+    q.value?.type === 'sequence' ||
+    q.value?.mode === 'sequence' ||
+    (!q.value?.options && (!!q.value?.scrambled || !!q.value?.words))
+  )
+})
+
+const rawWords = computed<string[]>(() => {
+  return q.value?.scrambled || q.value?.words || []
 })
 
 watch(
@@ -32,8 +40,8 @@ function initQuestion() {
   selectedChoice.value = null
   isChoiceSubmitted.value = false
 
-  if (isSequenceMode.value && q.value?.words) {
-    availableBlocks.value = shuffleArray([...q.value.words])
+  if (isSequenceMode.value && rawWords.value.length > 0) {
+    availableBlocks.value = shuffleArray([...rawWords.value])
   } else {
     availableBlocks.value = []
   }
@@ -69,26 +77,33 @@ function handleUndoBlock(index: number) {
 
 function resetSequence() {
   if (store.currentState !== 'PLAYING') return
-  if (!q.value?.words) return
+  if (rawWords.value.length === 0) return
   selectedBlocks.value = []
-  availableBlocks.value = shuffleArray([...q.value.words])
+  availableBlocks.value = shuffleArray([...rawWords.value])
 }
 
 function checkSequenceAnswer() {
-  const assembled = selectedBlocks.value.join(' ')
-  const isCorrect = assembled === q.value?.correct
+  const target = (q.value?.correctSequence || q.value?.correct) as string[] | string
+  const isMatch = Array.isArray(target)
+    ? selectedBlocks.value.every((w, idx) => w === target[idx])
+    : selectedBlocks.value.join(' ') === target
 
   setTimeout(() => {
-    if (isCorrect) {
+    if (isMatch) {
       store.handleCorrectAnswer(120)
     } else {
+      const targetStr = Array.isArray(target) ? target.join(' ') : target
       store.handleWrongAnswer({
-        questionTitle: `Susun Balok SPOK: Pola ${q.value?.pattern || 'Kalimat'}`,
-        userAttempt: assembled,
-        correctAnswer: q.value?.correct || '',
-        explanation: q.value?.explanation || 'Susunlah balok mengikuti urutan Subjek (Pelaku), Predikat (Kerja), Objek (Penderita), dan Keterangan.',
+        questionTitle: 'Susun Balok SPOK: Urutan Belum Tepat',
+        userAttempt: selectedBlocks.value.join(' '),
+        correctAnswer: targetStr || '',
+        explanation:
+          q.value?.explanation ||
+          'Susunlah balok mengikuti urutan Subjek (Pelaku), Predikat (Kerja), Objek (Penderita), dan Keterangan.',
       })
-      resetSequence()
+      setTimeout(() => {
+        resetSequence()
+      }, 400)
     }
   }, 400)
 }
@@ -109,7 +124,9 @@ function handleChoiceSelect(choice: string) {
         questionTitle: `Kalimat Efektif: "${q.value?.sentence}"`,
         userAttempt: choice,
         correctAnswer: q.value?.correct || '',
-        explanation: q.value?.explanation || 'Perhatikan subjek dan kata kerja aktif/pasif yang sesuai kaidah tata bahasa.',
+        explanation:
+          q.value?.explanation ||
+          'Perhatikan subjek dan kata kerja aktif/pasif yang sesuai kaidah tata bahasa.',
       })
     }
 
