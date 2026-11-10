@@ -64,6 +64,17 @@ function shuffleArray<T>(arr: T[]): T[] {
   return result
 }
 
+function shuffleDifferent<T>(arr: T[]): T[] {
+  if (arr.length <= 1) return [...arr]
+  let shuffled = shuffleArray([...arr])
+  let attempts = 0
+  while (shuffled.every((item, i) => item === arr[i]) && attempts < 5) {
+    shuffled = shuffleArray([...arr])
+    attempts++
+  }
+  return shuffled
+}
+
 function handleBlockClick(word: string, index: number) {
   if (store.currentState !== 'PLAYING') return
 
@@ -87,7 +98,7 @@ function resetSequence() {
   if (store.currentState !== 'PLAYING') return
   if (rawWords.value.length === 0) return
   selectedBlocks.value = []
-  availableBlocks.value = shuffleArray([...rawWords.value])
+  availableBlocks.value = shuffleDifferent([...rawWords.value])
 }
 
 function checkSequenceAnswer() {
@@ -136,6 +147,8 @@ function handleChoiceSelect(choice: string) {
           q.value?.explanation ||
           'Perhatikan subjek dan kata kerja aktif/pasif yang sesuai kaidah tata bahasa.',
       })
+      // Acak ulang lokasi ABCD ketika menjawab salah
+      shuffledChoiceOptions.value = shuffleDifferent([...shuffledChoiceOptions.value])
     }
 
     selectedChoice.value = null

@@ -21,6 +21,17 @@ function shuffleArray<T>(arr: T[]): T[] {
   return result
 }
 
+function shuffleDifferent<T>(arr: T[]): T[] {
+  if (arr.length <= 1) return [...arr]
+  let shuffled = shuffleArray([...arr])
+  let attempts = 0
+  while (shuffled.every((item, i) => item === arr[i]) && attempts < 5) {
+    shuffled = shuffleArray([...arr])
+    attempts++
+  }
+  return shuffled
+}
+
 watch(
   () => store.currentQuestionIndex,
   () => {
@@ -53,6 +64,8 @@ function handleSelectOption(option: string) {
         correctAnswer: `${q.value?.correct} + ${q.value?.baseWord} = ${q.value?.resultWord}`,
         explanation: q.value?.explanation || 'Pilihlah imbuhan yang sesuai kaidah morfologi kalimat.',
       })
+      // Acak ulang lokasi ABCD ketika menjawab salah
+      shuffledOptions.value = shuffleDifferent([...shuffledOptions.value])
     }
 
     selectedOption.value = null

@@ -21,6 +21,17 @@ function shuffleArray<T>(arr: T[]): T[] {
   return result
 }
 
+function shuffleDifferent<T>(arr: T[]): T[] {
+  if (arr.length <= 1) return [...arr]
+  let shuffled = shuffleArray([...arr])
+  let attempts = 0
+  while (shuffled.every((item, i) => item === arr[i]) && attempts < 5) {
+    shuffled = shuffleArray([...arr])
+    attempts++
+  }
+  return shuffled
+}
+
 watch(
   () => store.currentQuestionIndex,
   () => {
@@ -53,6 +64,8 @@ function handleSelect(option: string) {
         correctAnswer: `Kategori yang tepat: "${q.value?.correct}"`,
         explanation: q.value?.explanation || 'Pahami konteks apakah makna kalimat bermakna lugas (denotatif) atau kiasan (konotatif/majas).',
       })
+      // Acak ulang lokasi ABCD ketika menjawab salah
+      shuffledOptions.value = shuffleDifferent([...shuffledOptions.value])
     }
 
     selectedOption.value = null

@@ -26,6 +26,18 @@ function shuffleArray<T>(arr: T[]): T[] {
   return result
 }
 
+function shuffleDifferent<T>(arr: T[], isEqual?: (a: T, b: T) => boolean): T[] {
+  if (arr.length <= 1) return [...arr]
+  const eq = isEqual || ((a: T, b: T) => a === b)
+  let shuffled = shuffleArray([...arr])
+  let attempts = 0
+  while (shuffled.every((item, i) => eq(item, arr[i])) && attempts < 5) {
+    shuffled = shuffleArray([...arr])
+    attempts++
+  }
+  return shuffled
+}
+
 watch(
   () => store.currentQuestionIndex,
   () => {
@@ -72,6 +84,11 @@ function handleSelect(index: number) {
           q.value?.explanation ||
           'Ingat rima pantun berpola a-b-a-b, baris ke-3 berima dengan baris ke-1, baris ke-4 berima dengan baris ke-2.',
       })
+      // Acak ulang lokasi ABCD ketika menjawab salah
+      shuffledOptions.value = shuffleDifferent(
+        [...shuffledOptions.value],
+        (a, b) => a.pair[0] === b.pair[0] && a.pair[1] === b.pair[1]
+      )
     }
 
     selectedIndex.value = null
