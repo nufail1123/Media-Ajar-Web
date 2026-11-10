@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, computed } from 'vue'
+import { ref, computed, watch } from 'vue'
 import { useGameStore } from '../../stores/gameStore'
 import { Hammer, Check, X, HelpCircle } from 'lucide-vue-next'
 
@@ -8,6 +8,32 @@ const store = useGameStore()
 const q = computed(() => store.currentQuestion)
 const selectedOption = ref<string | null>(null)
 const isSubmitted = ref(false)
+const shuffledOptions = ref<string[]>([])
+
+const optionLetters = ['A', 'B', 'C', 'D']
+
+function shuffleArray<T>(arr: T[]): T[] {
+  const result = [...arr]
+  for (let i = result.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1))
+    ;[result[i], result[j]] = [result[j], result[i]]
+  }
+  return result
+}
+
+watch(
+  () => store.currentQuestionIndex,
+  () => {
+    selectedOption.value = null
+    isSubmitted.value = false
+    if (q.value?.options) {
+      shuffledOptions.value = shuffleArray([...q.value.options])
+    } else {
+      shuffledOptions.value = []
+    }
+  },
+  { immediate: true }
+)
 
 function handleSelectOption(option: string) {
   if (store.currentState !== 'PLAYING' || isSubmitted.value) return
@@ -75,10 +101,10 @@ function handleSelectOption(option: string) {
       </div>
     </div>
 
-    <!-- Tombol Pilihan Imbuhan Chunky 3D (1 kolom di HP, 2 kolom di tablet/PC) -->
+    <!-- Tombol Pilihan Imbuhan Chunky 3D Acak ABCD (1 kolom di HP, 2 kolom di tablet/PC) -->
     <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
       <button
-        v-for="opt in q?.options"
+        v-for="(opt, idx) in shuffledOptions"
         :key="opt"
         type="button"
         @click="handleSelectOption(opt)"
@@ -91,13 +117,35 @@ function handleSelectOption(option: string) {
             : 'bg-white hover:bg-purple-50 text-slate-800 border-purple-200 border-b-purple-300 hover:border-purple-400'
         ]"
       >
-        <span class="text-purple-700 font-black text-xs sm:text-sm bg-purple-100 px-2 py-0.5 rounded-lg">
-          Imbuhan
-        </span>
+        <div class="flex items-center gap-2">
+          <!-- Lencana Huruf ABCD Acak -->
+          <span
+            class="w-7 h-7 rounded-xl font-black text-xs flex items-center justify-center font-fredoka shadow-sm"
+            :class="[
+              isSubmitted && (opt === q?.correct || selectedOption === opt)
+                ? 'bg-white/20 text-white'
+                : 'bg-purple-200 text-purple-900'
+            ]"
+          >
+            {{ optionLetters[idx] || idx + 1 }}
+          </span>
+          <span
+            class="font-black text-xs sm:text-sm px-2 py-0.5 rounded-lg"
+            :class="[
+              isSubmitted && (opt === q?.correct || selectedOption === opt)
+                ? 'bg-white/20 text-white'
+                : 'text-purple-700 bg-purple-100'
+            ]"
+          >
+            Imbuhan
+          </span>
+        </div>
+
         <span class="text-lg sm:text-xl font-black flex-1 text-center">
           + {{ opt }}
         </span>
-        <span class="w-5 flex justify-end">
+
+        <span class="w-6 flex justify-end">
           <Check v-if="isSubmitted && opt === q?.correct" class="w-5 h-5 text-white stroke-[3]" />
           <X v-else-if="isSubmitted && selectedOption === opt && opt !== q?.correct" class="w-5 h-5 text-white stroke-[3]" />
         </span>

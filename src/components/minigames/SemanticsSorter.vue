@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, computed } from 'vue'
+import { ref, computed, watch } from 'vue'
 import { useGameStore } from '../../stores/gameStore'
 import { Layers, Check, X, HelpCircle, Quote } from 'lucide-vue-next'
 
@@ -8,6 +8,32 @@ const store = useGameStore()
 const q = computed(() => store.currentQuestion)
 const selectedOption = ref<string | null>(null)
 const isSubmitted = ref(false)
+const shuffledOptions = ref<string[]>([])
+
+const optionLetters = ['A', 'B', 'C', 'D']
+
+function shuffleArray<T>(arr: T[]): T[] {
+  const result = [...arr]
+  for (let i = result.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1))
+    ;[result[i], result[j]] = [result[j], result[i]]
+  }
+  return result
+}
+
+watch(
+  () => store.currentQuestionIndex,
+  () => {
+    selectedOption.value = null
+    isSubmitted.value = false
+    if (q.value?.options) {
+      shuffledOptions.value = shuffleArray([...q.value.options])
+    } else {
+      shuffledOptions.value = []
+    }
+  },
+  { immediate: true }
+)
 
 function handleSelect(option: string) {
   if (store.currentState !== 'PLAYING' || isSubmitted.value) return
@@ -68,10 +94,10 @@ function handleSelect(option: string) {
       </div>
     </div>
 
-    <!-- Pilihan Kategori Chunky 3D (Responsive Grid) -->
+    <!-- Pilihan Kategori Chunky 3D Acak ABCD (Responsive Grid) -->
     <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
       <button
-        v-for="opt in q?.options"
+        v-for="(opt, idx) in shuffledOptions"
         :key="opt"
         type="button"
         @click="handleSelect(opt)"
@@ -84,10 +110,22 @@ function handleSelect(option: string) {
             : 'bg-white hover:bg-sky-50 text-slate-800 border-sky-200 border-b-sky-300 hover:border-sky-400'
         ]"
       >
-        <span class="flex-1 text-center font-black">
+        <span
+          class="w-7 h-7 rounded-xl font-black text-xs flex items-center justify-center font-fredoka shadow-sm shrink-0"
+          :class="[
+            isSubmitted && (opt === q?.correct || selectedOption === opt)
+              ? 'bg-white/20 text-white'
+              : 'bg-sky-200 text-sky-900'
+          ]"
+        >
+          {{ optionLetters[idx] || idx + 1 }}
+        </span>
+
+        <span class="flex-1 text-center font-black px-2">
           {{ opt }}
         </span>
-        <span class="w-6 flex justify-end">
+
+        <span class="w-6 flex justify-end shrink-0">
           <Check v-if="isSubmitted && opt === q?.correct" class="w-5 h-5 text-white stroke-[3]" />
           <X v-else-if="isSubmitted && selectedOption === opt && opt !== q?.correct" class="w-5 h-5 text-white stroke-[3]" />
         </span>

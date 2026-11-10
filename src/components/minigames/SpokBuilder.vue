@@ -14,6 +14,9 @@ const selectedBlocks = ref<string[]>([])
 // Mode 2: Pilihan Ganda Struktur / Kalimat Pasif (Choice Mode)
 const selectedChoice = ref<string | null>(null)
 const isChoiceSubmitted = ref(false)
+const shuffledChoiceOptions = ref<string[]>([])
+
+const optionLetters = ['A', 'B', 'C', 'D']
 
 const isSequenceMode = computed(() => {
   return (
@@ -42,8 +45,13 @@ function initQuestion() {
 
   if (isSequenceMode.value && rawWords.value.length > 0) {
     availableBlocks.value = shuffleArray([...rawWords.value])
+    shuffledChoiceOptions.value = []
+  } else if (!isSequenceMode.value && q.value?.options) {
+    shuffledChoiceOptions.value = shuffleArray([...q.value.options])
+    availableBlocks.value = []
   } else {
     availableBlocks.value = []
+    shuffledChoiceOptions.value = []
   }
 }
 
@@ -210,7 +218,7 @@ function handleChoiceSelect(choice: string) {
       </div>
     </div>
 
-    <!-- TAMPILAN MODE 2: PILIHAN GANDA STRUKTUR / PASIF (CHOICE MODE) -->
+    <!-- TAMPILAN MODE 2: PILIHAN GANDA STRUKTUR / PASIF (CHOICE MODE ACAK ABCD) -->
     <div v-else class="flex-1 flex flex-col justify-between gap-4">
       <!-- Kalimat Acuan -->
       <div class="p-5 bg-gradient-to-b from-rose-50/70 to-white border-4 border-rose-200 rounded-3xl shadow-sm text-center flex flex-col justify-center items-center min-h-[110px]">
@@ -222,10 +230,10 @@ function handleChoiceSelect(choice: string) {
         </p>
       </div>
 
-      <!-- Opsi Jawaban Chunky 3D (Responsive Grid) -->
+      <!-- Opsi Jawaban Chunky 3D Acak ABCD (Responsive Grid) -->
       <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
         <button
-          v-for="opt in q?.options"
+          v-for="(opt, idx) in shuffledChoiceOptions"
           :key="opt"
           type="button"
           @click="handleChoiceSelect(opt)"
@@ -238,6 +246,16 @@ function handleChoiceSelect(choice: string) {
               : 'bg-white hover:bg-rose-50 text-slate-800 border-rose-200 border-b-rose-300 hover:border-rose-400'
           ]"
         >
+          <span
+            class="w-7 h-7 rounded-xl font-black text-xs flex items-center justify-center font-fredoka shadow-sm shrink-0 mr-2.5"
+            :class="[
+              isChoiceSubmitted && (opt === q?.correct || selectedChoice === opt)
+                ? 'bg-white/20 text-white'
+                : 'bg-rose-200 text-rose-900'
+            ]"
+          >
+            {{ optionLetters[idx] || idx + 1 }}
+          </span>
           <span class="flex-1 leading-snug">
             {{ opt }}
           </span>

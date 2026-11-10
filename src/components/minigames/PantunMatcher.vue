@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, computed } from 'vue'
+import { ref, computed, watch } from 'vue'
 import { useGameStore } from '../../stores/gameStore'
 import { Scroll, Sparkles, Check, X, HelpCircle } from 'lucide-vue-next'
 
@@ -9,24 +9,68 @@ const q = computed(() => store.currentQuestion)
 const selectedIndex = ref<number | null>(null)
 const isSubmitted = ref(false)
 
+interface PantunOptionItem {
+  pair: [string, string]
+  isCorrect: boolean
+}
+
+const shuffledOptions = ref<PantunOptionItem[]>([])
+const optionLetters = ['A', 'B', 'C', 'D']
+
+function shuffleArray<T>(arr: T[]): T[] {
+  const result = [...arr]
+  for (let i = result.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1))
+    ;[result[i], result[j]] = [result[j], result[i]]
+  }
+  return result
+}
+
+watch(
+  () => store.currentQuestionIndex,
+  () => {
+    selectedIndex.value = null
+    isSubmitted.value = false
+    if (q.value?.options) {
+      const correctIdx = q.value.correctIndex ?? 0
+      const items: PantunOptionItem[] = q.value.options.map(
+        (pair: [string, string], idx: number) => ({
+          pair,
+          isCorrect: idx === correctIdx,
+        })
+      )
+      shuffledOptions.value = shuffleArray(items)
+    } else {
+      shuffledOptions.value = []
+    }
+  },
+  { immediate: true }
+)
+
 function handleSelect(index: number) {
   if (store.currentState !== 'PLAYING' || isSubmitted.value) return
 
   selectedIndex.value = index
   isSubmitted.value = true
 
-  const isCorrect = index === q.value?.correctIndex
+  const chosen = shuffledOptions.value[index]
+  const isCorrect = chosen?.isCorrect ?? false
 
   setTimeout(() => {
     if (isCorrect) {
       store.handleCorrectAnswer(120)
     } else {
-      const correctPair = q.value?.options?.[q.value?.correctIndex] || []
+      const correctItem = shuffledOptions.value.find((item) => item.isCorrect)
+      const correctPairStr = correctItem?.pair.join(' / ') || ''
+      const userAttemptStr = chosen?.pair.join(' / ') || ''
+
       store.handleWrongAnswer({
         questionTitle: `Sastra Pantun: "${q.value?.sampiran?.[0]}"`,
-        userAttempt: q.value?.options?.[index]?.join(' / ') || '',
-        correctAnswer: correctPair.join(' / '),
-        explanation: q.value?.explanation || 'Ingat rima pantun berpola a-b-a-b, baris ke-3 berima dengan baris ke-1, baris ke-4 berima dengan baris ke-2.',
+        userAttempt: userAttemptStr,
+        correctAnswer: correctPairStr,
+        explanation:
+          q.value?.explanation ||
+          'Ingat rima pantun berpola a-b-a-b, baris ke-3 berima dengan baris ke-1, baris ke-4 berima dengan baris ke-2.',
       })
     }
 
@@ -78,34 +122,54 @@ function handleSelect(index: number) {
       </span>
     </div>
 
-    <!-- Pilihan Pasangan Baris Isi (Chunky 3D Buttons) -->
+    <!-- Pilihan Pasangan Baris Isi (Chunky 3D Buttons Acak ABCD) -->
     <div class="flex flex-col gap-3 sm:gap-3.5">
       <button
-        v-for="(pair, idx) in q?.options"
+        v-for="(item, idx) in shuffledOptions"
         :key="idx"
         type="button"
-        @click="handleSelect(Number(idx))"
+        @click="handleSelect(idx)"
         class="min-h-[52px] sm:min-h-[60px] p-3 sm:p-4 rounded-2xl font-nunito transition-all duration-100 flex items-center justify-between shadow-md active:border-b-2 active:translate-y-1 touch-manipulation select-none text-left border-2 border-b-4"
         :class="[
-          isSubmitted && idx === q?.correctIndex
+          isSubmitted && item.isCorrect
             ? 'bg-emerald-500 border-emerald-600 border-b-emerald-700 text-white'
-            : isSubmitted && selectedIndex === idx && idx !== q?.correctIndex
+            : isSubmitted && selectedIndex === idx && !item.isCorrect
             ? 'bg-rose-500 border-rose-600 border-b-rose-700 text-white animate-shake'
             : 'bg-white hover:bg-emerald-50 text-slate-800 border-emerald-200 border-b-emerald-300 hover:border-emerald-400'
         ]"
       >
-        <div class="flex flex-col leading-snug">
-          <span class="text-xs sm:text-sm font-semibold text-slate-600">
-            {{ pair[0] }}
+        <div class="flex items-center gap-3 flex-1">
+          <!-- Lencana ABCD Acak -->
+          <span
+            class="w-7 h-7 rounded-xl font-black text-xs flex items-center justify-center font-fredoka shadow-sm shrink-0"
+            :class="[
+              isSubmitted && (item.isCorrect || selectedIndex === idx)
+                ? 'bg-white/20 text-white'
+                : 'bg-emerald-200 text-emerald-900'
+            ]"
+          >
+            {{ optionLetters[idx] || idx + 1 }}
           </span>
-          <span class="text-xs sm:text-sm font-black text-slate-900 font-fredoka">
-            {{ pair[1] }}
-          </span>
+
+          <div class="flex flex-col leading-snug flex-1">
+            <span
+              class="text-xs sm:text-sm font-semibold"
+              :class="isSubmitted && (item.isCorrect || selectedIndex === idx) ? 'text-white/90' : 'text-slate-600'"
+            >
+              {{ item.pair[0] }}
+            </span>
+            <span
+              class="text-xs sm:text-sm font-black font-fredoka"
+              :class="isSubmitted && (item.isCorrect || selectedIndex === idx) ? 'text-white' : 'text-slate-900'"
+            >
+              {{ item.pair[1] }}
+            </span>
+          </div>
         </div>
 
         <div class="w-6 flex justify-end shrink-0 ml-3">
-          <Check v-if="isSubmitted && idx === q?.correctIndex" class="w-5 h-5 text-white stroke-[3]" />
-          <X v-else-if="isSubmitted && selectedIndex === idx && idx !== q?.correctIndex" class="w-5 h-5 text-white stroke-[3]" />
+          <Check v-if="isSubmitted && item.isCorrect" class="w-5 h-5 text-white stroke-[3]" />
+          <X v-else-if="isSubmitted && selectedIndex === idx && !item.isCorrect" class="w-5 h-5 text-white stroke-[3]" />
         </div>
       </button>
     </div>
