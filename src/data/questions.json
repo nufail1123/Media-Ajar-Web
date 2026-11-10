@@ -1,0 +1,341 @@
+{
+  "ejaan": [
+    {
+      "id": "ej_1",
+      "instruction": "Ketuk semua kata atau tanda yang salah ejaannya agar diperbaiki!",
+      "sentence": "ayah pergi ke danau toba kemarin sore.",
+      "tokens": [
+        { "word": "ayah", "isError": true, "correct": "Ayah", "hint": "Awal kalimat harus menggunakan huruf kapital" },
+        { "word": "pergi", "isError": false },
+        { "word": "ke", "isError": false },
+        { "word": "danau", "isError": true, "correct": "Danau", "hint": "Nama unsur geografi yang diikuti nama diri harus kapital" },
+        { "word": "toba", "isError": true, "correct": "Toba", "hint": "Nama diri geografi harus menggunakan huruf kapital" },
+        { "word": "kemarin", "isError": false },
+        { "word": "sore.", "isError": false }
+      ]
+    },
+    {
+      "id": "ej_2",
+      "instruction": "Temukan kesalahan tanda baca koma pada perincian kalimat ini!",
+      "sentence": "Ibu membeli apel jeruk dan mangga di pasar.",
+      "tokens": [
+        { "word": "Ibu", "isError": false },
+        { "word": "membeli", "isError": false },
+        { "word": "apel", "isError": true, "correct": "apel,", "hint": "Gunakan tanda koma di antara unsur perincian" },
+        { "word": "jeruk", "isError": true, "correct": "jeruk,", "hint": "Gunakan tanda koma sebelum kata hubung 'dan' pada perincian lebih dari dua" },
+        { "word": "dan", "isError": false },
+        { "word": "mangga", "isError": false },
+        { "word": "di", "isError": false },
+        { "word": "pasar.", "isError": false }
+      ]
+    },
+    {
+      "id": "ej_3",
+      "instruction": "Ketuk nama hari, nama orang, dan tempat yang belum menggunakan huruf kapital!",
+      "sentence": "pada hari minggu, budi berlibur ke pantai kuta.",
+      "tokens": [
+        { "word": "pada", "isError": true, "correct": "Pada", "hint": "Awal kalimat wajib diawali huruf kapital" },
+        { "word": "hari", "isError": false },
+        { "word": "minggu,", "isError": true, "correct": "Minggu,", "hint": "Nama hari dalam kalender harus kapital" },
+        { "word": "budi", "isError": true, "correct": "Budi", "hint": "Nama orang harus menggunakan huruf kapital" },
+        { "word": "berlibur", "isError": false },
+        { "word": "ke", "isError": false },
+        { "word": "pantai", "isError": true, "correct": "Pantai", "hint": "Nama geografi Pantai Kuta harus kapital" },
+        { "word": "kuta.", "isError": true, "correct": "Kuta.", "hint": "Nama tempat Kuta harus kapital" }
+      ]
+    },
+    {
+      "id": "ej_4",
+      "instruction": "Perbaiki tanda baca akhir dan kata sapaan seru pada kalimat kekaguman ini!",
+      "sentence": "wah indah sekali pemandangan di Puncak Bogor?",
+      "tokens": [
+        { "word": "wah", "isError": true, "correct": "Wah,", "hint": "Kata seru 'Wah' di awal kalimat harus kapital dan diikuti koma" },
+        { "word": "indah", "isError": false },
+        { "word": "sekali", "isError": false },
+        { "word": "pemandangan", "isError": false },
+        { "word": "di", "isError": false },
+        { "word": "Puncak", "isError": false },
+        { "word": "Bogor?", "isError": true, "correct": "Bogor!", "hint": "Kalimat seruan/kekaguman harus diakhiri tanda seru (!)" }
+      ]
+    },
+    {
+      "id": "ej_5",
+      "instruction": "Ketuk gelar kehormatan dan nama institusi yang ditulis huruf kecil!",
+      "sentence": "kemarin dokter andi berkunjung ke rumah sakit pelita bangsa.",
+      "tokens": [
+        { "word": "kemarin", "isError": true, "correct": "Kemarin", "hint": "Awal kalimat harus kapital" },
+        { "word": "dokter", "isError": true, "correct": "Dokter", "hint": "Gelar/profesi yang melekat pada nama diri harus kapital" },
+        { "word": "andi", "isError": true, "correct": "Andi", "hint": "Nama orang harus diawali kapital" },
+        { "word": "berkunjung", "isError": false },
+        { "word": "ke", "isError": false },
+        { "word": "rumah", "isError": true, "correct": "Rumah", "hint": "Nama instansi Rumah Sakit Pelita Bangsa diawali kapital" },
+        { "word": "sakit", "isError": true, "correct": "Sakit", "hint": "Bagian nama instansi resmi diawali kapital" },
+        { "word": "pelita", "isError": true, "correct": "Pelita", "hint": "Nama diri badan diawali kapital" },
+        { "word": "bangsa.", "isError": true, "correct": "Bangsa.", "hint": "Nama diri badan diawali kapital" }
+      ]
+    }
+  ],
+  "imbuhan": [
+    {
+      "id": "imb_1",
+      "instruction": "Pilihlah imbuhan yang tepat untuk membentuk kata kerja aktif!",
+      "baseWord": "lukis",
+      "context": "Adik sedang [...] pemandangan gunung di kamarnya.",
+      "options": ["me-", "di-", "ber-", "pe-"],
+      "correct": "me-",
+      "resultWord": "melukis",
+      "note": "Imbuhan me- + lukis = melukis, menyatakan tindakan aktif melakukan perbuatan melukis."
+    },
+    {
+      "id": "imb_2",
+      "instruction": "Pilih imbuhan yang bermakna 'orang yang melakukan pekerjaan'!",
+      "baseWord": "selam",
+      "context": "Paman bekerja sebagai [...] mutiara di laut timur.",
+      "options": ["pen-", "pe-", "ter-", "ber-"],
+      "correct": "pe-",
+      "resultWord": "penyelam",
+      "note": "Awalan pe- pada kata dasar berawalan 's' melebur menjadi 'peny-' (penyelam) bermakna profesi/pelaku."
+    },
+    {
+      "id": "imb_3",
+      "instruction": "Pilih imbuhan yang membentuk kata benda bermakna 'hal atau sifat yang adil'!",
+      "baseWord": "adil",
+      "context": "Seorang hakim harus menjunjung tinggi [...] dalam persidangan.",
+      "options": ["ke-an", "pe-an", "se-nya", "ber-"],
+      "correct": "ke-an",
+      "resultWord": "keadilan",
+      "note": "Konfiks ke-an membentuk kata benda abstrak yang menyatakan sifat atau hal."
+    },
+    {
+      "id": "imb_4",
+      "instruction": "Pilih imbuhan yang menyatakan alat untuk membersihkan kotoran!",
+      "baseWord": "sapu",
+      "context": "Kakak membeli [...] lidi baru untuk membersihkan halaman.",
+      "options": ["pe-", "pen-", "ter-", "ber-"],
+      "correct": "pe-",
+      "resultWord": "penyapu",
+      "note": "Awalan pe- pada kata 'sapu' melebur menjadi 'penyapu', bermakna alat yang digunakan untuk menyapu."
+    },
+    {
+      "id": "imb_5",
+      "instruction": "Pilih imbuhan yang menyatakan kata kerja pasif tidak disengaja!",
+      "baseWord": "tulis",
+      "context": "Nama Toni tidak sengaja [...] di papan pengumuman.",
+      "options": ["ter-", "di-", "ke-an", "ber-"],
+      "correct": "ter-",
+      "resultWord": "tertulis",
+      "note": "Awalan ter- bermakna keadaan pasif yang sudah terjadi secara tidak sengaja (spontan)."
+    },
+    {
+      "id": "imb_6",
+      "instruction": "Pilih imbuhan yang bermakna 'melakukan kegiatan atau mengendarai'!",
+      "baseWord": "sepeda",
+      "context": "Setiap hari Minggu, Budi gemar [...] keliling kompleks perumahan.",
+      "options": ["ber-", "me-", "di-", "ter-"],
+      "correct": "ber-",
+      "resultWord": "bersepeda",
+      "note": "Awalan ber- + sepeda = bersepeda, bermakna mengendarai atau berolahraga menggunakan sepeda."
+    }
+  ],
+  "semantik": [
+    {
+      "id": "sem_1",
+      "instruction": "Tentukan apakah frasa bercetak tebal bermakna Denotatif atau Konotatif!",
+      "phrase": "Meja Hijau",
+      "sentence": "Perkara sengketa tanah itu akhirnya dibawa ke meja hijau.",
+      "options": ["Denotatif (Makna Sebenarnya)", "Konotatif (Kiasan)"],
+      "correct": "Konotatif (Kiasan)",
+      "explanation": "Frasa 'meja hijau' di sini bermakna kiasan yaitu pengadilan, bukan meja yang dicat warna hijau."
+    },
+    {
+      "id": "sem_2",
+      "instruction": "Tentukan jenis gaya bahasa (majas) pada kalimat berikut!",
+      "phrase": "Pucuk Pohon Melambai",
+      "sentence": "Pucuk pohon kelapa itu melambai-lambai memanggil nelayan pulang.",
+      "options": ["Personifikasi", "Hiperbola", "Metafora"],
+      "correct": "Personifikasi",
+      "explanation": "Personifikasi memberikan sifat manusia (melambai dan memanggil) kepada benda mati (pohon kelapa)."
+    },
+    {
+      "id": "sem_3",
+      "instruction": "Tentukan jenis gaya bahasa (majas) yang melebih-lebihkan kenyataan berikut!",
+      "phrase": "Darah Membeku",
+      "sentence": "Mendengar suara dentuman bom itu, darah warga serasa membeku seketika.",
+      "options": ["Personifikasi", "Hiperbola", "Metafora"],
+      "correct": "Hiperbola",
+      "explanation": "Hiperbola melebih-lebihkan kenyataan secara ekstrem ('darah membeku') untuk memberi efek dramatis."
+    },
+    {
+      "id": "sem_4",
+      "instruction": "Tentukan apakah kalimat berikut menggunakan makna Denotatif atau Konotatif!",
+      "phrase": "Meja Hijau",
+      "sentence": "Ayah mengecat meja belajar adik dengan warna hijau daun yang cerah.",
+      "options": ["Denotatif (Makna Sebenarnya)", "Konotatif (Kiasan)"],
+      "correct": "Denotatif (Makna Sebenarnya)",
+      "explanation": "Meja hijau pada kalimat ini merujuk secara harfiah pada meja fisik yang diberi cat warna hijau."
+    },
+    {
+      "id": "sem_5",
+      "instruction": "Tentukan jenis gaya bahasa yang membandingkan langsung dua hal berikut!",
+      "phrase": "Raja Hutan",
+      "sentence": "Singa jantan itu dijuluki sebagai raja hutan yang berkuasa di savana.",
+      "options": ["Personifikasi", "Hiperbola", "Metafora"],
+      "correct": "Metafora",
+      "explanation": "Metafora membandingkan langsung singa dengan raja tanpa kata penghubung seperti 'seperti' atau 'laksana'."
+    },
+    {
+      "id": "sem_6",
+      "instruction": "Tentukan makna frasa 'Kambing Hitam' pada kalimat berikut!",
+      "phrase": "Kambing Hitam",
+      "sentence": "Doni dijadikan kambing hitam atas rusaknya jendela kelas kemarin sore.",
+      "options": ["Denotatif (Makna Sebenarnya)", "Konotatif (Kiasan)"],
+      "correct": "Konotatif (Kiasan)",
+      "explanation": "'Kambing hitam' bermakna kiasan yaitu orang yang dipersalahkan atas kesalahan orang lain."
+    }
+  ],
+  "spok": [
+    {
+      "id": "spk_1",
+      "type": "sequence",
+      "instruction": "Susun balok kata acak berikut menjadi kalimat berpola SPOK yang efektif!",
+      "scrambled": ["di lapangan", "Doni", "sepak bola", "bermain"],
+      "correctSequence": ["Doni", "bermain", "sepak bola", "di lapangan"],
+      "explanation": "Subjek: Doni, Predikat: bermain, Objek: sepak bola, Keterangan: di lapangan."
+    },
+    {
+      "id": "spk_2",
+      "type": "choice",
+      "instruction": "Ubah kalimat aktif berikut menjadi kalimat pasif yang tepat: 'Pak Tani menanam padi di sawah.'",
+      "sentence": "Pak Tani menanam padi di sawah.",
+      "options": [
+        "Padi ditanam Pak Tani di sawah.",
+        "Pak Tani menanam padi di sawah.",
+        "Sawah menanam padi Pak Tani.",
+        "Padi menanam Pak Tani di sawah."
+      ],
+      "correct": "Padi ditanam Pak Tani di sawah.",
+      "explanation": "Pada kalimat pasif, objek 'Padi' beralih menjadi subjek dan predikat berawalan di- ('ditanam')."
+    },
+    {
+      "id": "spk_3",
+      "type": "sequence",
+      "instruction": "Susun balok kata berikut berurutan: Subjek - Predikat - Objek - Keterangan!",
+      "scrambled": ["setiap pagi", "menyiram", "Ibu", "bunga mawar"],
+      "correctSequence": ["Ibu", "menyiram", "bunga mawar", "setiap pagi"],
+      "explanation": "Subjek: Ibu, Predikat: menyiram, Objek: bunga mawar, Keterangan Waktu: setiap pagi."
+    },
+    {
+      "id": "spk_4",
+      "type": "choice",
+      "instruction": "Manakah di bawah ini kalimat yang memiliki struktur lengkap SPOK?",
+      "sentence": "Pilihlah kalimat dengan pola SPOK terlengkap:",
+      "options": [
+        "Rina membaca novel kemarin sore.",
+        "Adik tertidur pulas di kamar tidur.",
+        "Burung kenari berkicau merdu sekali.",
+        "Ayah berangkat ke kantor pagi ini."
+      ],
+      "correct": "Rina membaca novel kemarin sore.",
+      "explanation": "Rina (S) membaca (P) novel (O) kemarin sore (K). Pilihan lain berpola SPK atau SP Pelengkap."
+    },
+    {
+      "id": "spk_5",
+      "type": "sequence",
+      "instruction": "Susun balok kata acak berikut menjadi kalimat SPOK yang padu!",
+      "scrambled": ["di perpustakaan", "buku dongeng", "Siswa kelas 5", "meminjam"],
+      "correctSequence": ["Siswa kelas 5", "meminjam", "buku dongeng", "di perpustakaan"],
+      "explanation": "Subjek: Siswa kelas 5, Predikat: meminjam, Objek: buku dongeng, Keterangan: di perpustakaan."
+    },
+    {
+      "id": "spk_6",
+      "type": "choice",
+      "instruction": "Ubah kalimat aktif 'Dokter memeriksa pasien di ruang klinik.' menjadi kalimat pasif!",
+      "sentence": "Dokter memeriksa pasien di ruang klinik.",
+      "options": [
+        "Pasien diperiksa dokter di ruang klinik.",
+        "Dokter diperiksa pasien di ruang klinik.",
+        "Klinik memeriksa pasien dokter.",
+        "Pasien memeriksa dokter di ruang klinik."
+      ],
+      "correct": "Pasien diperiksa dokter di ruang klinik.",
+      "explanation": "Objek 'pasien' diletakkan di depan sebagai subjek yang dikenai tindakan oleh dokter."
+    }
+  ],
+  "pantun": [
+    {
+      "id": "pan_1",
+      "instruction": "Pilih dua baris isi yang memiliki rima a-b-a-b selaras dengan sampiran!",
+      "sampiran": [
+        "Berakit-rakit ke hulu,",
+        "Berenang-renang ke tepian."
+      ],
+      "options": [
+        ["Bersakit-sakit dahulu,", "Bersenang-senang kemudian."],
+        ["Ayo kawan berjuang bersama,", "Agar cita-cita tercapai nyata."],
+        ["Makan roti rasa durian,", "Lari pagi keliling taman."]
+      ],
+      "correctIndex": 0,
+      "explanation": "Rima sampiran adalah -lu (1) dan -an (2). Baris isi berima -lu (3: dahulu) dan -an (4: kemudian) membentuk pola a-b-a-b."
+    },
+    {
+      "id": "pan_2",
+      "instruction": "Temukan dua baris isi pantun nasihat dengan rima akhir yang tepat!",
+      "sampiran": [
+        "Anak ayam turun sepuluh,",
+        "Mati satu tinggal sembilan."
+      ],
+      "options": [
+        ["Tuntutlah ilmu bersungguh-sungguh,", "Supaya kelak tidak ketinggalan."],
+        ["Bunga mawar harum baunya,", "Kumbang hinggap di atas dahan."],
+        ["Pergi ke pasar beli kelapa,", "Jangan lupa membeli ikan."]
+      ],
+      "correctIndex": 0,
+      "explanation": "Rima -luh (sepuluh) berpadu dengan bersungguh-sungguh (-guh/-uh), dan -lan (sembilan) berpadu dengan ketinggalan (-lan)."
+    },
+    {
+      "id": "pan_3",
+      "instruction": "Pasangkan sampiran pantun ini dengan isi nasihat berpola rima serasi!",
+      "sampiran": [
+        "Pohon beringin daunnya lebat,",
+        "Tempat berteduh sang gembala."
+      ],
+      "options": [
+        ["Jika kamu ingin selamat,", "Jangan pernah berbuat cela."],
+        ["Rajin belajar setiap hari,", "Agar nilaimu selalu tinggi."],
+        ["Kucing belang makan ikan,", "Lari kencang ke halaman."]
+      ],
+      "correctIndex": 0,
+      "explanation": "Rima baris 1 lebat (-bat) sama dengan selamat (-bat/-at), baris 2 gembala (-la) sama dengan cela (-la)."
+    },
+    {
+      "id": "pan_4",
+      "instruction": "Lengkapi pantun berikut dengan baris isi berbudi luhur!",
+      "sampiran": [
+        "Bunga melati harum semerbak,",
+        "Tumbuh indah di dekat kolam."
+      ],
+      "options": [
+        ["Nasihat guru jangan ditolak,", "Agar hatimu selalu tenteram."],
+        ["Beli mangga di pasar buah,", "Jangan lupa membayar uang."],
+        ["Pagi hari jalan ke sawah,", "Melihat padi mulai menguning."]
+      ],
+      "correctIndex": 0,
+      "explanation": "Rima semerbak (-bak) selaras dengan ditolak (-lak), kolam (-lam) selaras dengan tenteram (-ram)."
+    },
+    {
+      "id": "pan_5",
+      "instruction": "Pilihlah pasangan isi pantun jenaka dan nasihat belajar berikut!",
+      "sampiran": [
+        "Jalan-jalan ke kota Blitar,",
+        "Jangan lupa membeli sukun."
+      ],
+      "options": [
+        ["Jika kamu ingin pintar,", "Belajarlah dengan tekun."],
+        ["Kue bolu manis rasanya,", "Dimakan saat kumpul bersama."],
+        ["Burung camar terbang melayang,", "Mencari makan di tepi pantai."]
+      ],
+      "correctIndex": 0,
+      "explanation": "Rima Blitar (-tar) berpasangan dengan pintar (-tar), sukun (-kun) berpasangan dengan tekun (-kun)."
+    }
+  ]
+}

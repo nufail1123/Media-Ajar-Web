@@ -1,0 +1,31 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html, body {
+    margin: 0;
+    padding: 0;
+    min-height: 100%;
+    -webkit-tap-highlight-color: transparent;
+  }
+}
+
+@layer utilities {
+  .touch-manipulation {
+    touch-action: manipulation;
+  }
+
+  /* Arcade text shadow utility */
+  .text-arcade-shadow {
+    text-shadow: 0 4px 0 rgba(0, 0, 0, 0.25), 0 8px 15px rgba(0, 0, 0, 0.35);
+  }
+
+  .text-arcade-stroke {
+    -webkit-text-stroke: 1.5px rgba(0, 0, 0, 0.3);
+  }
+
+  .box-arcade-shadow {
+    box-shadow: 0 8px 0 rgba(0, 0, 0, 0.15), 0 15px 25px rgba(0, 0, 0, 0.2);
+  }
+}
