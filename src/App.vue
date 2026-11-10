@@ -3,6 +3,7 @@ import { computed, onMounted, onUnmounted, watch } from 'vue'
 import { useGameStore } from './stores/gameStore'
 import MenuView from './views/MenuView.vue'
 import HudBar from './components/common/HudBar.vue'
+import ClassroomBackground from './components/common/ClassroomBackground.vue'
 import CountdownOverlay from './components/common/CountdownOverlay.vue'
 import StageClearModal from './components/common/StageClearModal.vue'
 import GameOverModal from './components/common/GameOverModal.vue'
@@ -93,16 +94,15 @@ onUnmounted(() => {
 
 <template>
   <div
-    class="min-h-screen w-full bg-slate-900 text-slate-800 flex flex-col items-center justify-between p-2 sm:p-4 md:p-6 overflow-x-hidden select-none transition-colors duration-300 relative"
+    class="min-h-screen w-full text-slate-800 flex flex-col items-center justify-between p-2 sm:p-4 md:p-6 overflow-x-hidden select-none transition-colors duration-300 relative font-nunito"
     :class="[
       store.isShaking ? 'animate-shake' : '',
-      store.feedbackType === 'correct' ? 'bg-emerald-950/40 ring-inset ring-8 ring-emerald-500/30' : '',
-      store.feedbackType === 'wrong' ? 'bg-rose-950/40 ring-inset ring-8 ring-rose-500/30' : ''
+      store.feedbackType === 'correct' ? 'ring-inset ring-8 ring-emerald-500/50' : '',
+      store.feedbackType === 'wrong' ? 'ring-inset ring-8 ring-rose-500/50' : ''
     ]"
   >
-    <!-- Background Decorator Gradients -->
-    <div class="fixed top-0 left-1/4 w-96 h-96 bg-amber-500/10 rounded-full blur-3xl pointer-events-none" />
-    <div class="fixed bottom-0 right-1/4 w-96 h-96 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none" />
+    <!-- Latar Ruang Kelas Interaktif (Classroom Background) -->
+    <ClassroomBackground :show-hero="store.currentState === 'MENU'" />
 
     <!-- TAMPILAN 1: MENU VIEW -->
     <div
@@ -122,16 +122,16 @@ onUnmounted(() => {
 
       <!-- Kartu Konsol Arcade Tengah -->
       <main
-        class="w-full bg-white rounded-2xl md:rounded-3xl shadow-2xl p-4 sm:p-6 md:p-8 flex flex-col justify-between min-h-[460px] sm:min-h-[520px] transition-all relative overflow-hidden"
+        class="w-full bg-white/95 backdrop-blur-md rounded-3xl border-4 border-amber-300 shadow-board p-4 sm:p-6 md:p-8 flex flex-col justify-between min-h-[460px] sm:min-h-[520px] transition-all relative overflow-hidden"
       >
         <!-- Bar Indikator Nomor Soal -->
-        <div class="flex items-center justify-between pb-3 mb-2 border-b border-slate-100 text-xs sm:text-sm font-bold text-slate-500">
-          <span class="bg-slate-100 text-slate-700 px-2.5 py-0.5 rounded-full font-fredoka">
+        <div class="flex items-center justify-between pb-3 mb-2 border-b-2 border-slate-100 text-xs sm:text-sm font-bold text-slate-500">
+          <span class="bg-amber-100 text-amber-900 border border-amber-300 px-3 py-1 rounded-full font-fredoka font-black">
             {{ questionProgressText }}
           </span>
 
-          <span class="text-[11px] font-semibold text-slate-400">
-            Fase B/C SD
+          <span class="text-xs font-bold text-slate-500 bg-slate-100 px-3 py-1 rounded-full">
+            Kurikulum Merdeka (Fase B/C SD)
           </span>
         </div>
 

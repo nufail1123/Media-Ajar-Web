@@ -86,47 +86,49 @@ function handleTokenClick(index: number) {
 <template>
   <div class="flex flex-col justify-between h-full w-full gap-4 sm:gap-6">
     <!-- Instruksi & Indikator Sisa Kesalahan -->
-    <div class="flex flex-col sm:flex-row items-center justify-between gap-2 bg-emerald-50 border border-emerald-200 rounded-2xl p-3 sm:p-4 text-emerald-900 shadow-sm">
-      <div class="flex items-center gap-2 text-center sm:text-left">
-        <Sparkles class="w-5 h-5 text-emerald-600 shrink-0 hidden sm:block" />
+    <div class="flex flex-col sm:flex-row items-center justify-between gap-2 bg-amber-50 border-2 border-amber-300 rounded-3xl p-3 sm:p-4 text-amber-950 shadow-sm">
+      <div class="flex items-center gap-2.5 text-center sm:text-left">
+        <div class="w-10 h-10 rounded-2xl bg-amber-400 text-amber-950 flex items-center justify-center font-black shrink-0 hidden sm:flex shadow-sm">
+          <Sparkles class="w-5 h-5 text-amber-950" />
+        </div>
         <div>
-          <h2 class="text-xs sm:text-sm font-black uppercase tracking-wider text-emerald-700">Misi Detektif:</h2>
-          <p class="text-sm sm:text-base font-bold font-fredoka leading-tight">
+          <h2 class="text-xs font-black uppercase tracking-wider text-amber-800 font-fredoka">Misi Detektif:</h2>
+          <p class="text-sm sm:text-base font-bold font-fredoka leading-tight text-amber-950">
             {{ store.currentQuestion?.instruction || 'Ketuk kata yang salah ejaannya!' }}
           </p>
         </div>
       </div>
 
-      <div class="inline-flex items-center gap-1.5 bg-emerald-600 text-white px-3 py-1 rounded-full text-xs sm:text-sm font-extrabold shadow font-fredoka shrink-0">
+      <div class="inline-flex items-center gap-1.5 bg-orange-500 border-b-2 border-orange-700 text-white px-3.5 py-1 rounded-full text-xs sm:text-sm font-black shadow font-fredoka shrink-0">
         <span>Kesalahan:</span>
-        <span class="bg-emerald-800 px-2 py-0.5 rounded-full text-amber-300">
+        <span class="bg-orange-700 px-2 py-0.5 rounded-full text-amber-200">
           {{ remainingErrors }} tersisa
         </span>
       </div>
     </div>
 
-    <!-- Area Kalimat & Token Interaktif -->
-    <div class="flex-1 flex flex-col justify-center items-center py-4 sm:py-8 px-2 sm:px-4 bg-slate-50 border-2 border-dashed border-emerald-300/80 rounded-2xl sm:rounded-3xl shadow-inner min-h-[180px] sm:min-h-[220px]">
-      <div class="flex flex-wrap items-center justify-center gap-2 sm:gap-3 max-w-2xl">
+    <!-- Area Kalimat & Token Interaktif (Chunky Candy Tiles) -->
+    <div class="flex-1 flex flex-col justify-center items-center py-5 sm:py-8 px-3 sm:px-6 bg-[#fef9ee] border-4 border-amber-200 rounded-3xl shadow-inner min-h-[180px] sm:min-h-[220px]">
+      <div class="flex flex-wrap items-center justify-center gap-2.5 sm:gap-3.5 max-w-2xl">
         <button
           v-for="(token, idx) in currentTokens"
           :key="idx"
           type="button"
           @click="handleTokenClick(idx)"
-          class="relative px-3 sm:px-4 py-2 sm:py-2.5 rounded-xl text-base sm:text-xl md:text-2xl font-bold font-nunito transition-all duration-200 min-h-[48px] touch-manipulation select-none"
+          class="relative px-3.5 sm:px-5 py-2.5 sm:py-3 rounded-2xl text-base sm:text-xl md:text-2xl font-black font-fredoka transition-all duration-150 min-h-[48px] touch-manipulation select-none border-2 border-b-4 shadow-md"
           :class="[
             token.isFixed
-              ? 'bg-emerald-500 text-white shadow-md ring-2 ring-emerald-300 scale-105'
-              : 'bg-white hover:bg-emerald-100/70 text-slate-800 shadow-sm hover:shadow border border-slate-200 hover:border-emerald-400 active:scale-95',
-            token.shaking ? 'animate-shake bg-rose-100 text-rose-700 border-rose-400' : ''
+              ? 'bg-emerald-500 border-emerald-600 border-b-emerald-700 text-white scale-105'
+              : 'bg-white hover:bg-amber-100 text-slate-800 border-amber-300 border-b-amber-400 active:border-b-2 active:translate-y-1',
+            token.shaking ? 'animate-shake bg-rose-100 text-rose-800 border-rose-400 border-b-rose-500' : ''
           ]"
         >
           <!-- Teks kata / yang sudah diperbaiki -->
           <span :class="{'line-through opacity-70 text-sm block': token.isFixed && token.correct}">
-            {{ token.isFixed && token.correct ? token.word : token.word }}
+            {{ token.word }}
           </span>
 
-          <span v-if="token.isFixed && token.correct" class="font-extrabold text-white flex items-center justify-center gap-1">
+          <span v-if="token.isFixed && token.correct" class="font-black text-white flex items-center justify-center gap-1">
             <CheckCircle2 class="w-4 h-4 inline text-emerald-200" />
             {{ token.correct }}
           </span>
@@ -134,9 +136,9 @@ function handleTokenClick(index: number) {
           <!-- Efek Badge saat Sukses Diperbaiki -->
           <span
             v-if="token.isFixed"
-            class="absolute -top-2 -right-2 bg-emerald-600 text-[10px] text-white px-1.5 py-0.2 rounded-full font-black border border-white shadow"
+            class="absolute -top-2.5 -right-2 bg-emerald-700 text-[10px] text-white px-2 py-0.5 rounded-full font-black border border-white shadow"
           >
-            FIXED
+            TEPAT!
           </span>
         </button>
       </div>
@@ -144,19 +146,19 @@ function handleTokenClick(index: number) {
       <!-- Hint edukasi di bawah jika ada yang sudah diperbaiki -->
       <div
         v-if="fixedErrorsCount > 0"
-        class="mt-4 sm:mt-6 flex flex-wrap items-center justify-center gap-2 text-xs font-semibold text-emerald-800"
+        class="mt-4 sm:mt-6 flex flex-wrap items-center justify-center gap-2 text-xs font-bold text-amber-900 font-fredoka"
       >
-        <span class="inline-flex items-center gap-1 bg-emerald-100/80 px-2.5 py-1 rounded-lg">
-          <CheckCircle2 class="w-3.5 h-3.5 text-emerald-600" />
-          {{ fixedErrorsCount }} dari {{ totalErrors }} kesalahan berhasil kamu temukan!
+        <span class="inline-flex items-center gap-1 bg-amber-200/80 px-3 py-1 rounded-xl">
+          <CheckCircle2 class="w-4 h-4 text-emerald-600" />
+          {{ fixedErrorsCount }} dari {{ totalErrors }} kesalahan berhasil ditemukan!
         </span>
       </div>
     </div>
 
     <!-- Petunjuk Ramah Siswa -->
-    <div class="text-center text-xs text-slate-400 font-medium flex items-center justify-center gap-1.5">
-      <HelpCircle class="w-4 h-4 text-emerald-500" />
-      <span>Perhatikan huruf kapital pada nama orang, kota, awal kalimat, serta tanda baca perincian.</span>
+    <div class="text-center text-xs text-slate-500 font-bold flex items-center justify-center gap-1.5 font-fredoka">
+      <HelpCircle class="w-4 h-4 text-amber-500" />
+      <span>Perhatikan huruf kapital pada nama orang, tempat, awal kalimat, serta tanda baca koma.</span>
     </div>
   </div>
 </template>

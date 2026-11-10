@@ -16,16 +16,35 @@
     touch-action: manipulation;
   }
 
-  /* Arcade text shadow utility */
-  .text-arcade-shadow {
-    text-shadow: 0 4px 0 rgba(0, 0, 0, 0.25), 0 8px 15px rgba(0, 0, 0, 0.35);
+  /* 3D Golden Arcade Title Styling (Pure CSS) */
+  .arcade-title-glow {
+    color: #ffde59;
+    text-shadow: 
+      0 1px 0 #ffffff,
+      0 2px 0 #f59e0b,
+      0 3px 0 #d97706,
+      0 5px 0 #1e293b,
+      0 7px 0 #0f172a,
+      0 9px 14px rgba(0, 0, 0, 0.45);
   }
 
-  .text-arcade-stroke {
-    -webkit-text-stroke: 1.5px rgba(0, 0, 0, 0.3);
+  .arcade-title-glow-sm {
+    color: #ffde59;
+    text-shadow: 
+      0 1px 0 #ffffff,
+      0 2px 0 #f59e0b,
+      0 3px 0 #d97706,
+      0 4px 0 #1e293b,
+      0 5px 0 #0f172a,
+      0 7px 10px rgba(0, 0, 0, 0.4);
   }
 
-  .box-arcade-shadow {
-    box-shadow: 0 8px 0 rgba(0, 0, 0, 0.15), 0 15px 25px rgba(0, 0, 0, 0.2);
+  /* Wood & chalkboard textures */
+  .wood-frame {
+    box-shadow: inset 0 0 0 2px rgba(255, 255, 255, 0.15), inset 0 0 10px rgba(0, 0, 0, 0.5), 0 8px 0 #5a3215, 0 16px 24px rgba(0, 0, 0, 0.25);
+  }
+
+  .chalk-glow {
+    filter: drop-shadow(0 0 2px rgba(255, 255, 255, 0.6));
   }
 }
