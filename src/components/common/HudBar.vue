@@ -234,35 +234,37 @@ function cancelQuit() {
       </div>
     </div>
 
-    <!-- Modal Konfirmasi Keluar saat Permainan Berjalan -->
-    <div
-      v-if="showConfirmQuit"
-      class="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm flex items-center justify-center p-4"
-    >
-      <div class="bg-slate-800 border-2 border-amber-500/50 rounded-2xl max-w-sm w-full p-5 text-center shadow-2xl animate-pop">
-        <h3 class="text-lg font-bold font-fredoka text-amber-400 mb-2">
-          Keluar ke Menu Utama?
-        </h3>
-        <p class="text-xs sm:text-sm text-slate-300 mb-5">
-          Permainan stage saat ini belum selesai. Skor sementara tidak akan disimpan jika keluar sekarang.
-        </p>
-        <div class="grid grid-cols-2 gap-3">
-          <button
-            type="button"
-            @click="cancelQuit"
-            class="min-h-[44px] py-2 px-3 rounded-xl bg-slate-700 hover:bg-slate-600 text-slate-200 font-bold text-sm active:scale-95 transition-all"
-          >
-            Lanjut Main
-          </button>
-          <button
-            type="button"
-            @click="confirmQuit"
-            class="min-h-[44px] py-2 px-3 rounded-xl bg-rose-600 hover:bg-rose-500 text-white font-bold text-sm active:scale-95 transition-all"
-          >
-            Ya, Keluar
-          </button>
+    <!-- Modal Konfirmasi Keluar saat Permainan Berjalan (Teleport ke body agar tidak terpotong stacking context header) -->
+    <Teleport to="body">
+      <div
+        v-if="showConfirmQuit"
+        class="fixed inset-0 z-[100] bg-black/75 backdrop-blur-sm flex items-center justify-center p-4"
+      >
+        <div class="bg-slate-800 border-2 border-amber-500/50 rounded-2xl max-w-sm w-full p-5 text-center shadow-2xl animate-pop text-white">
+          <h3 class="text-lg font-bold font-fredoka text-amber-400 mb-2">
+            Keluar ke Menu Utama?
+          </h3>
+          <p class="text-xs sm:text-sm text-slate-300 mb-5">
+            Permainan stage saat ini belum selesai. Skor sementara tidak akan disimpan jika keluar sekarang.
+          </p>
+          <div class="grid grid-cols-2 gap-3">
+            <button
+              type="button"
+              @click="cancelQuit"
+              class="min-h-[44px] py-2 px-3 rounded-xl bg-slate-700 hover:bg-slate-600 text-slate-200 font-bold text-sm active:scale-95 transition-all"
+            >
+              Lanjut Main
+            </button>
+            <button
+              type="button"
+              @click="confirmQuit"
+              class="min-h-[44px] py-2 px-3 rounded-xl bg-rose-600 hover:bg-rose-500 text-white font-bold text-sm active:scale-95 transition-all"
+            >
+              Ya, Keluar
+            </button>
+          </div>
         </div>
       </div>
-    </div>
+    </Teleport>
   </header>
 </template>

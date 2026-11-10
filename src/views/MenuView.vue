@@ -198,34 +198,36 @@ function confirmReset() {
     </footer>
 
     <!-- Modal Konfirmasi Reset Progres -->
-    <div
-      v-if="showResetConfirm"
-      class="fixed inset-0 z-50 bg-black/75 backdrop-blur-sm flex items-center justify-center p-4"
-    >
-      <div class="bg-slate-800 border-2 border-rose-500/60 rounded-3xl max-w-sm w-full p-5 text-center shadow-2xl animate-pop">
-        <h3 class="text-lg font-bold font-fredoka text-rose-400 mb-2">
-          Reset Seluruh Progres?
-        </h3>
-        <p class="text-xs sm:text-sm text-slate-300 mb-5">
-          Seluruh perolehan bintang, skor tertinggi, dan modul yang terbuka akan dikembalikan ke kondisi awal.
-        </p>
-        <div class="grid grid-cols-2 gap-3">
-          <button
-            type="button"
-            @click="showResetConfirm = false"
-            class="min-h-[44px] py-2 px-3 rounded-xl bg-slate-700 hover:bg-slate-600 text-slate-200 font-bold text-sm active:scale-95 transition-all"
-          >
-            Batal
-          </button>
-          <button
-            type="button"
-            @click="confirmReset"
-            class="min-h-[44px] py-2 px-3 rounded-xl bg-rose-600 hover:bg-rose-500 text-white font-bold text-sm active:scale-95 transition-all"
-          >
-            Ya, Reset
-          </button>
+    <Teleport to="body">
+      <div
+        v-if="showResetConfirm"
+        class="fixed inset-0 z-[100] bg-black/75 backdrop-blur-sm flex items-center justify-center p-4"
+      >
+        <div class="bg-slate-800 border-2 border-rose-500/60 rounded-3xl max-w-sm w-full p-5 text-center shadow-2xl animate-pop text-white">
+          <h3 class="text-lg font-bold font-fredoka text-rose-400 mb-2">
+            Reset Seluruh Progres?
+          </h3>
+          <p class="text-xs sm:text-sm text-slate-300 mb-5">
+            Seluruh perolehan bintang, skor tertinggi, dan modul yang terbuka akan dikembalikan ke kondisi awal.
+          </p>
+          <div class="grid grid-cols-2 gap-3">
+            <button
+              type="button"
+              @click="showResetConfirm = false"
+              class="min-h-[44px] py-2 px-3 rounded-xl bg-slate-700 hover:bg-slate-600 text-slate-200 font-bold text-sm active:scale-95 transition-all"
+            >
+              Batal
+            </button>
+            <button
+              type="button"
+              @click="confirmReset"
+              class="min-h-[44px] py-2 px-3 rounded-xl bg-rose-600 hover:bg-rose-500 text-white font-bold text-sm active:scale-95 transition-all"
+            >
+              Ya, Reset
+            </button>
+          </div>
         </div>
       </div>
-    </div>
+    </Teleport>
   </div>
 </template>

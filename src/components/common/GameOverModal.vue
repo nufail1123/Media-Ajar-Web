@@ -19,8 +19,9 @@ const randomEncouragement = computed(() => {
 </script>
 
 <template>
-  <div class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-3 sm:p-4">
-    <div class="bg-gradient-to-b from-slate-800 to-slate-900 border-2 border-rose-500/80 rounded-3xl max-w-md w-full p-5 sm:p-7 text-center shadow-2xl animate-pop text-white relative overflow-hidden">
+  <Teleport to="body">
+    <div class="fixed inset-0 z-[100] bg-black/80 backdrop-blur-sm flex items-center justify-center p-3 sm:p-4">
+      <div class="bg-gradient-to-b from-slate-800 to-slate-900 border-2 border-rose-500/80 rounded-3xl max-w-md w-full p-5 sm:p-7 text-center shadow-2xl animate-pop text-white relative overflow-hidden">
       <!-- Glow ambient background -->
       <div class="absolute -top-12 -left-12 w-40 h-40 bg-rose-500/20 rounded-full blur-2xl pointer-events-none" />
 
@@ -97,4 +98,5 @@ const randomEncouragement = computed(() => {
       </div>
     </div>
   </div>
+</Teleport>
 </template>
